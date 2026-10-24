@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gaming Creator Toolkit Pro</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Rajdhani:wght@500;700&display=swap">
+<style>
+:root{--bg:#f3f1fb;--card:#fff;--text:#1a1830;--muted:#6a6783;--a:#ff6a00;--b:#ff2d55;--c:#ffb800;--line:#e2dff2;--done:#e6f8ec;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e0c1a;--card:#191631;--text:#f2f0ff;--muted:#a5a1c4;--line:#2c2850;--done:#12301f;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e0c1a;--card:#191631;--text:#f2f0ff;--muted:#a5a1c4;--line:#2c2850;--done:#12301f;color-scheme:dark}
+html[data-game="MC"]{--a:#2ea043;--b:#6cbf3a;--c:#00b3a4}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.45}
+.w{max-width:760px;margin:0 auto;padding:14px}
+.hero{background:linear-gradient(135deg,var(--a),var(--b) 65%,var(--c));color:#fff;border-radius:18px;padding:16px;margin-bottom:12px}
+.hero h1{margin:0 0 2px;font-size:1.4rem}
+.hero p{margin:0 0 10px;opacity:.95;font-size:.9rem}
+.hero input{width:100%;padding:10px 12px;border-radius:10px;border:0;font-size:1rem;background:rgba(255,255,255,.24);color:#fff}
+.hero input::placeholder{color:rgba(255,255,255,.85)}
+.st{display:flex;gap:8px;margin-top:10px}
+.st div{flex:1;background:rgba(0,0,0,.22);border-radius:12px;padding:8px;text-align:center;font-size:.76rem}
+.st b{display:block;font-size:1.1rem}
+.gs{display:flex;gap:10px;margin-bottom:12px}
+.gb{flex:1;padding:14px 8px;border-radius:14px;border:2px solid var(--line);background:var(--card);color:var(--text);font-size:1.02rem;font-weight:700;cursor:pointer}
+.gb.on{border-color:transparent;color:#fff;background:linear-gradient(135deg,var(--a),var(--b))}
+.tabs{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto}
+.tab{flex:1;min-width:max-content;padding:10px 14px;border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:12px;font-size:.92rem;cursor:pointer}
+.tab.on{background:var(--text);color:var(--bg);border-color:transparent}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px}
+.bar{height:10px;background:var(--line);border-radius:9px;overflow:hidden;margin:8px 0}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--a),var(--b),var(--c));transition:width .4s}
+.day{display:flex;gap:10px;align-items:flex-start;padding:9px 6px;border-bottom:1px solid var(--line)}
+.day:last-child{border:0}
+.day.done{background:var(--done);border-radius:10px}
+.day>input,label.ck input{width:22px;height:22px;margin-top:2px;accent-color:var(--a);flex:none}
+.day details{flex:1}
+.day summary{cursor:pointer;list-style:none}
+.day summary::-webkit-details-marker{display:none}
+.d{font-weight:700;color:var(--a);margin-right:6px}
+.more{margin-top:8px;font-size:.88rem;color:var(--muted);padding:10px;background:var(--bg);border-radius:10px}
+.more b{color:var(--text)}
+select,input[type=text]{width:100%;padding:11px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--text);font-size:1rem;margin:5px 0 10px}
+.l{font-size:.85rem;color:var(--muted)}
+button.go{width:100%;padding:12px;border:0;border-radius:12px;background:linear-gradient(90deg,var(--a),var(--b));color:#fff;font-size:1rem;font-weight:600;cursor:pointer;margin-top:2px}
+button.sm{padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--text);cursor:pointer;font-size:.85rem}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.res{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.res:last-child{border:0}
+.res button{flex:none}
+pre{white-space:pre-wrap;word-break:break-word;background:var(--bg);padding:12px;border-radius:10px;font:inherit;font-size:.88rem;margin:8px 0}
+label.ck{display:flex;gap:10px;padding:8px 0;align-items:center}
+h3{margin:2px 0 8px;font-size:1.05rem}
+.idea{font-size:1.1rem;font-weight:600;padding:14px;text-align:center;border-radius:12px;background:var(--bg);margin:10px 0}
+.foot{text-align:center;color:var(--muted);font-size:.78rem;margin:16px 0 8px}
+@keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes swap{from{opacity:0;transform:scale(.96) translateY(10px)}to{opacity:1;transform:none}}
+@keyframes flow{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+@keyframes shine{from{background-position:0 0}to{background-position:200% 0}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes fall{from{transform:translateY(0) rotate(0);opacity:1}to{transform:translateY(105vh) rotate(540deg);opacity:.2}}
+.hero{background-size:220% 220%;animation:flow 9s ease infinite}
+.hero h1{display:inline-block;animation:bob 2.4s ease-in-out infinite}
+section{animation:up .45s ease both}
+section.swap{animation:swap .45s ease both}
+.card{animation:up .5s ease both}
+.bar i{background-size:200% 100%;animation:shine 2.2s linear infinite}
+.gb,.tab,button.go,button.sm,.chip{transition:transform .15s,box-shadow .2s}
+.gb:hover,.tab:hover,button.go:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.18)}
+.gb:active,.tab:active,button.go:active,button.sm:active{transform:scale(.95)}
+.gb.on{box-shadow:0 8px 22px rgba(0,0,0,.25)}
+.res{animation:up .35s ease both}
+.idea{animation:swap .35s ease both}
+.cf{position:fixed;top:-30px;z-index:99;pointer-events:none;animation:fall 1.6s ease-in forwards}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+@keyframes zoom{from{transform:scale(.3) rotate(-8deg);opacity:0}to{transform:none;opacity:1}}
+.hero{position:relative}
+.hero h1{padding-right:46px}
+.snd{position:absolute;top:12px;right:12px;border:0;background:rgba(255,255,255,.25);color:#fff;border-radius:10px;padding:6px 10px;cursor:pointer;font-size:1rem}
+.lvl{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.55);animation:fadein .3s both}
+.lvl div{background:linear-gradient(135deg,var(--a),var(--b),var(--c));color:#fff;padding:28px 36px;border-radius:22px;text-align:center;font-size:1rem;font-size:3rem;animation:zoom .6s cubic-bezier(.2,1.6,.4,1) both}
+.lvl b{display:block;font-size:1.8rem;margin:6px 0 4px}
+.lvl span{display:block;font-size:1rem}
+html:root:root{--bg:#07060f;--card:#0f0c20;--text:#eef0ff;--muted:#8d91c7;--line:#2b2668;--done:#0b2a22;color-scheme:dark}
+html{--on:#fff}
+html[data-game="FF"]{--a:#ff7a1a;--b:#ff2d6f;--c:#ffd23f;--on:#fff}
+html[data-game="MC"]{--a:#39ff88;--b:#2ee6a6;--c:#00d4ff;--on:#04130a}
+@keyframes glow{0%,100%{box-shadow:0 0 10px var(--a)}50%{box-shadow:0 0 26px var(--a)}}
+body{font-family:"Rajdhani","Segoe UI",system-ui,sans-serif;font-size:1.06rem;background:radial-gradient(800px 420px at 10% -5%,rgba(122,60,255,.30),transparent 60%),radial-gradient(700px 400px at 100% 5%,rgba(255,45,111,.18),transparent 60%),var(--bg)}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:34px 34px}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:2;background:repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0 1px,transparent 1px 3px)}
+.w{position:relative;z-index:1}
+h1,h3,.gb,.tab,.d,.st b,button.go,.lvl b{font-family:"Orbitron","Rajdhani",system-ui,sans-serif;letter-spacing:.05em}
+.hero{background:linear-gradient(#0c0a1c,#0c0a1c) padding-box,linear-gradient(135deg,var(--a),var(--b),var(--c)) border-box;background-size:100% 100%,220% 220%;border:2px solid transparent;border-radius:20px 4px 20px 4px;color:#fff;box-shadow:0 0 30px rgba(122,60,255,.25)}
+.hero h1{font-size:1.05rem;text-transform:uppercase;background:linear-gradient(90deg,var(--c),var(--a));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--muted);font-size:.8rem;letter-spacing:.06em;text-transform:uppercase}
+.hero input{background:rgba(255,255,255,.06);border:1px solid var(--line);color:#fff;border-radius:4px}
+.st div{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:4px 10px;color:var(--muted);text-transform:uppercase;font-size:.62rem;letter-spacing:.06em}
+.st b{color:var(--c);text-shadow:0 0 10px var(--a);font-size:1rem}
+.gb{border-radius:4px 16px;text-transform:uppercase;font-size:.8rem;border:1px solid var(--line)}
+.gb.on{color:var(--on);animation:glow 2s ease-in-out infinite}
+.tab{border-radius:4px 10px;text-transform:uppercase;font-size:.7rem}
+.tab.on{background:rgba(255,255,255,.05);color:var(--a);border:1px solid var(--a);box-shadow:0 0 14px var(--a)}
+.card{border-radius:16px 4px;border-left:3px solid var(--a);box-shadow:0 0 22px rgba(0,0,0,.45)}
+.bar{height:14px;border-radius:2px;background:#05040c;border:1px solid var(--line)}
+.bar i{position:relative;border-radius:1px;box-shadow:0 0 14px var(--a)}
+.bar i::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 9px,rgba(0,0,0,.5) 9px 11px)}
+.d{color:var(--c);text-shadow:0 0 8px var(--a);font-size:.72rem}
+.day.done{box-shadow:inset 3px 0 0 var(--a)}
+select,input[type=text]{border-radius:4px;background:#07060f}
+select:focus,input:focus{outline:0;border-color:var(--a);box-shadow:0 0 12px var(--a)}
+button.go{border-radius:4px 16px;text-transform:uppercase;font-size:.8rem;color:var(--on)}
+button.go:hover{box-shadow:0 0 22px var(--a)}
+button.sm{border-radius:4px 10px}
+.idea{border:1px dashed var(--a);border-radius:4px 14px;font-family:"Orbitron",system-ui,sans-serif;font-size:.95rem}
+.lvl div{color:var(--on);border-radius:20px 4px;box-shadow:0 0 50px var(--a)}
+@keyframes run{from{transform:translateX(105vw)}to{transform:translateX(-90px)}}
+@keyframes hop{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+@keyframes cheer{0%{transform:scale(1)}30%{transform:translateY(-22px) rotate(-12deg) scale(1.25)}60%{transform:translateY(0) rotate(12deg) scale(1.15)}100%{transform:none}}
+@keyframes blink{50%{opacity:0}}
+@keyframes ldg{from{width:0}to{width:100%}}
+#lane{position:fixed;left:0;bottom:0;width:100%;height:58px;overflow:hidden;pointer-events:none;z-index:3}
+.rn{position:absolute;bottom:2px;left:0;font-size:1.9rem;animation:run 14s linear infinite;filter:drop-shadow(0 0 8px var(--a))}
+.hp{display:inline-block;animation:hop .55s ease-in-out infinite}
+.w{padding-bottom:78px}
+.pc{display:flex;gap:14px;align-items:center}
+.av{font-size:2.6rem;width:72px;height:72px;display:flex;align-items:center;justify-content:center;border:2px solid var(--a);border-radius:4px 18px;background:rgba(255,255,255,.04);box-shadow:0 0 18px var(--a);animation:bob 2s ease-in-out infinite;flex:none}
+.av.cheer{animation:cheer .9s ease}
+.px{width:100%;height:100%;display:block;overflow:visible;shape-rendering:crispEdges}
+.px .fa{fill:var(--a)}.px .fb{fill:var(--b)}.px .fc{fill:var(--c)}.px .fk{fill:#15122a}.px .fs{fill:#f2c28b}.px .fp{fill:#2b2668}
+.px .l1,.px .l2,.px .gl{transform-box:fill-box;transform-origin:center}
+.px .l1{animation:leg .5s steps(2) infinite}
+.px .l2{animation:leg .5s steps(2) infinite reverse}
+.px .gl{animation:blk 3s infinite}
+@keyframes leg{0%,100%{transform:translateY(0)}50%{transform:translateY(-1px)}}
+@keyframes blk{0%,92%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+.av{padding:6px}
+.pm .pxh{width:84px;height:98px}
+.rn .pxh{width:36px;height:42px}
+.pi{flex:1;min-width:0}
+.pi b{font-size:1rem;display:block;word-break:break-word}
+.pi>span{display:block;color:var(--c);font-size:.8rem;text-transform:uppercase;letter-spacing:.06em}
+#ps{position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:radial-gradient(circle at 50% 40%,#2a1066,#07060f 70%);color:#fff;text-align:center;cursor:pointer;transition:opacity .5s,transform .5s}
+#ps.out{opacity:0;transform:scale(1.2);pointer-events:none}
+.pm{font-size:3.4rem;display:flex;gap:10px}
+.pm span{display:inline-block;animation:hop .7s ease-in-out infinite;filter:drop-shadow(0 0 12px #ff2d6f)}
+.pm span:nth-child(2){animation-delay:.12s}.pm span:nth-child(3){animation-delay:.24s}.pm span:nth-child(4){animation-delay:.36s}
+#ps h2{font-family:"Orbitron",system-ui,sans-serif;font-size:1.35rem;margin:0;line-height:1.3;background:linear-gradient(90deg,#ffd23f,#ff2d6f,#00d4ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ld{width:min(260px,70vw);height:10px;border:1px solid #2b2668;border-radius:2px;overflow:hidden}
+.ld i{display:block;height:100%;background:linear-gradient(90deg,#ff7a1a,#ff2d6f,#00d4ff);animation:ldg 1.6s ease forwards}
+.bl{margin:0;font-family:"Orbitron",system-ui,sans-serif;letter-spacing:.2em;font-size:.9rem;animation:blink 1s steps(2) infinite}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="ps"><div class="pm"><span>🥷</span><span>🔥</span><span>⛏️</span><span>🧟</span></div><h2>GAMING CREATOR<br>TOOLKIT PRO</h2><div class="ld"><i></i></div><p class="bl">▶ PRESS START ◀</p></div>
+<div id="lane"></div>
+<div class="w">
+<div class="hero">
+<button class="snd" id="snd">🔊</button>
+<h1>🎮 Gaming Creator Toolkit Pro</h1>
+<p id="hi"></p>
+<input type="text" id="nm" placeholder="Your channel name">
+<div class="st"><div><b id="s1">0</b>Missions</div><div><b id="s2">Noob</b>Rank</div><div><b id="s3">0</b>XP</div><div><b id="s4">–</b>Badge</div><div><b id="s5">0</b>🔥 Streak</div></div>
+</div>
+<div class="gs"><button class="gb" data-g="FF">🔥 Free Fire</button><button class="gb" data-g="MC">⛏️ Minecraft</button></div>
+<div class="tabs">
+<button class="tab on" data-t="plan">🎯 Missions</button>
+<button class="tab" data-t="titles">✨ Titles</button>
+<button class="tab" data-t="tools">🛠 Tools</button>
+<button class="tab" data-t="live">🔴 Live</button>
+</div>
+
+<section id="plan">
+<div class="card pc"><div class="av" id="av">🥷</div><div class="pi"><b id="pn">PLAYER</b><span id="pl">LVL 1</span><div class="bar"><i id="xb"></i></div><span class="l" id="xt"></span></div></div>
+<div class="card"><b id="pt"></b><div class="bar"><i id="pb"></i></div><button class="sm" id="cpp">Copy full plan</button> <button class="sm" id="shr">📤 Share progress</button></div>
+<div class="card" id="days"></div>
+</section>
+
+<section id="titles" hidden>
+<div class="card">
+<label class="l">Style</label><select id="sty"><option>Viral</option><option>Tutorial</option><option>Funny</option></select>
+<label class="l">Topic (tap one or type your own)</label>
+<div class="chips" id="tc"></div>
+<input type="text" id="tp" placeholder="Type your topic">
+<button class="go" id="gen">Generate 6 titles</button></div>
+<div class="card" id="out"><span class="l">Your titles will appear here.</span></div>
+<div class="card"><h3>Thumbnail</h3><p class="l" id="thtip"></p><div id="thout"></div><button class="go" id="thb" style="margin-top:8px">Get thumbnail text</button></div>
+</section>
+
+<section id="tools" hidden>
+<div class="card"><h3>📝 Description + hashtags</h3>
+<label class="l">Video title</label><input type="text" id="dt" placeholder="Paste your video title">
+<button class="go" id="dgo">Write description</button><div id="dout"></div></div>
+<div class="card"><h3>⚡ Shorts idea machine</h3><div class="idea" id="sh">Tap the button</div><button class="go" id="shb">Give me a Shorts idea</button></div>
+<div class="card"><h3>📈 Growth rules</h3>
+<p class="l">• Post at the same time every day.<br>• First 15 seconds: show the best moment.<br>• Reply to every comment in the first hour.<br>• Cut one Short from every long video.<br>• Pin a comment asking a question.<br>• Test two thumbnails; keep the winner.</p></div>
+</section>
+
+<section id="live" hidden>
+<div class="card"><h3 id="lt"></h3><div id="li"></div></div>
+<div class="card"><h3>Before you go live</h3><div id="c1"></div></div>
+<div class="card"><h3>During the stream</h3><div id="c2"></div></div>
+<div class="card"><h3>After the stream</h3><div id="c3"></div></div>
+<button class="sm" id="rl">Reset checklist</button>
+</section>
+<p class="foot">Progress is saved on this device · Made for creators</p>
+</div>
+<script>
+var $=function(i){return document.getElementById(i)};
+var G={
+FF:{n:"Free Fire",e:"🔥",
+thumb:"Shocked face + red headshot crosshair + bold 2-word text.",
+topics:["rank push","headshots","sensitivity","clutch","loadout"],
+tx:["IMPOSSIBLE?","99% FAIL","NEW META","BOOYAH!","1 vs 4","NOOB TO PRO","BROKEN!","HEADSHOT ONLY"],
+ht:"#freefire #freefireindia #garena #booyah #freefirehighlights #gaming",
+sh:["Clutch in 15 seconds: show only the final kill","Rate my sensitivity in 15 seconds","Guess the loadout game","Worst teammate moments","1 setting, big difference","Pro vs noob reaction","Top 3 spots to land","Funniest death ever","Fastest rush in 20 seconds","Gloo wall trick you never saw"],
+lv:["Play with subscribers (squad invites)","Custom room giveaway","Rank push live: chat picks the loadout","Noob vs Pro: viewers vote","Headshot-only challenge"],
+p:[
+["Channel intro: my Free Fire journey","Show your best clip first, then say who you are in one line."],
+["10 settings every player must change","Say: “Change these or keep losing fights.”"],
+["Best sensitivity for headshots","Show a missed shot first, then the fixed one."],
+["Solo vs Squad challenge","Start in the final circle, then rewind."],
+["Funniest moments","Put the funniest clip in the first 5 seconds."],
+["Noob vs Pro","Split screen: same match, two skill levels."],
+["Rank push Part 1","Put your rank goal and deadline on screen."],
+["Top 5 loadouts this season","Rank them live; end with a surprise number 1."],
+["1 vs 4 clutch compilation","Start with the 1v4 and never cut away."],
+["Map callouts and rotations","Draw routes on the map with arrows."],
+["Best character combos","Show the combo kill before explaining it."],
+["Rank push Part 2","Recap Part 1 in 5 seconds, add a new rule."],
+["Fastest way to get a Booyah","Show the win first, then explain how."],
+["Tips I wish I knew earlier","Say: “I wasted 100 hours before learning this.”"],
+["Best landing spots","Count down from 5 to 1."],
+["Grenade tricks nobody uses","Open with a kill that looks impossible."],
+["Rank push Part 3 (final)","Say: “One win from my goal.”"],
+["Pistol-only challenge","Say: “Only a pistol. Can I win?”"],
+["Fix lag and boost FPS","Show laggy gameplay, then smooth gameplay."],
+["Reacting to my old gameplay","Old clip beside new clip."],
+["Sniper-only Booyah","First shot on screen in 3 seconds."],
+["Duo with a random teammate","Show their first funny mistake."],
+["Pro player settings tested","Say: “I copied a pro’s settings for a day.”"],
+["Hardest clutch ever","Slow-motion the key moment."],
+["Gloo wall tricks","Show a trap built with walls."],
+["Squad wipe in 60 seconds","Timer on screen the whole time."],
+["Subscriber room highlights","Open with the best subscriber moment."],
+["Mistakes that cost you matches","Show a death, then the fix."],
+["Ranked vs casual","Same player, two modes, side by side."],
+["Month recap + next 30 days","Show your growth numbers, ask what they want next."]]},
+MC:{n:"Minecraft",e:"⛏️",
+thumb:"Giant build or creeper behind you + yellow text + arrow.",
+topics:["hardcore world","redstone","diamonds","base build","speedrun"],
+tx:["IMPOSSIBLE?","I SURVIVED","SECRET BASE","OP TRICK","100 DAYS","NO WAY!","1 BLOCK","BROKEN!"],
+ht:"#minecraft #minecraftsurvival #minecrafthardcore #minecraftbuilds #gaming #shorts",
+sh:["1 tip in 20 seconds","Tiny house at 5x speed","Hide-and-seek in 30 seconds","Things that shouldn’t work","10-second redstone trick","Speedrun the first 3 minutes","Rate my base","Fastest diamond route","Secret door in 15 seconds","Trap that always works"],
+lv:["Build with subscribers (server day)","Hardcore world: chat votes each decision","Seed reveal and rate","Redstone challenge with viewers","Build battle: chat picks theme"],
+p:[
+["Channel intro: my Minecraft world","Show your best build first, then introduce yourself."],
+["Survival day 1 guide","Start at night with zombies nearby, then survive."],
+["5 builds in 5 minutes","Show the finished builds in 3 seconds, then build them."],
+["Find diamonds fast","Reveal a stack of diamonds, then show the Y level."],
+["Tricks most players miss","Count down: “Number 1 will save your world.”"],
+["100 days hardcore: Episode 1","Show the death screen for 1 second, then “Let’s start.”"],
+["Build a secret base","Show the hidden door opening with no explanation."],
+["Redstone made easy","Make a working trap in the first 10 seconds."],
+["100 days hardcore: Episode 2","Open on the cliffhanger from Episode 1."],
+["Mods you must try","Show the wildest mod effect first."],
+["Speedrun attempt","Timer on screen the entire video."],
+["Survival base tour","Fly through the base while music builds."],
+["Challenge a friend","Show the punishment for losing."],
+["Villager trading hacks","Show OP gear, then how you got it."],
+["Automatic farm tutorial","Start with the farm already running."],
+["One chunk survival","Say: “I only get one chunk. Can I win?”"],
+["100 days hardcore: Episode 3","Recap in 5 seconds, then jump in."],
+["Best seeds this month","Show the spawn view of each seed."],
+["Nether portal tricks","Show the shortcut path on a map."],
+["Mob farm build","Put an XP counter on screen."],
+["Minecraft with only one block","Start on one block over the void."],
+["Safe trap prank on a friend","Show the reveal moment first."],
+["Medieval castle timelapse","Show before and after side by side."],
+["Pro vs noob build battle","Split screen, same theme."],
+["Hidden secrets most players never found","Ask: “Did you know this exists?”"],
+["Survive the Ender Dragon","Start right at the fight."],
+["Rating my subscribers’ bases","React honestly to the first base."],
+["Tips I wish I knew earlier","Say: “I wasted 100 hours before learning this.”"],
+["100 days hardcore: Final episode","Say: “This is my last life.”"],
+["Month recap + next 30 days","Show your growth numbers, ask what they want next."]]}};
+var RK=["Noob","Rookie","Gamer","Pro","Elite","Legend","Mythic"];
+var CH={c1:["Test mic and game audio","Check internet speed","Set title, thumbnail, category","Write a pinned chat message","Close extra apps","Do a 10-second test recording"],
+c2:["Greet new viewers by name","Ask a question every 10 minutes","Ask to subscribe once per half hour","Replay a highlight for late joiners","Keep chat moderated"],
+c3:["Thank everyone in chat","Save best clips for Shorts","Edit a 60-second highlight","Add timestamps to the VOD","Note what viewers liked"]};
+var TT={Viral:["I Tried {t} in {g} and It Went Wrong","{t} in {g}: Nobody Tells You This","I Did {t} for 24 Hours in {g}","{g} {t} Challenge (Almost Impossible)","99% of Players Fail This {t} in {g}","This {t} Trick Broke {g}"],
+Tutorial:["The Only {t} Guide You Need for {g}","How to Get Better at {g}: {t}","{g} {t} Explained in 5 Minutes","{g}: {t} Tricks That Actually Work","Beginner to Pro: {t} in {g}","Stop Making This {t} Mistake in {g}"],
+Funny:["{t} in {g} but It’s a Disaster","My Friend Tried {t} in {g}","{g} {t} Fails You Can’t Unsee","Noob vs Pro: {t} in {g}","I Let Chat Control My {t} in {g}","{t} in {g} Went Hilariously Wrong"]};
+var K="gct-v3",S={};
+try{S=JSON.parse(localStorage.getItem(K)||"{}")}catch(e){S={}}
+if(S.game!=="MC")S.game="FF";
+function save(){try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}}
+function cur(){return G[S.game]}
+function sh(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),x=a[i];a[i]=a[j];a[j]=x}return a}
+function cp(t,b){var o=b.textContent;function ok(){b.textContent="Copied ✓";setTimeout(function(){b.textContent=o},1500)}function no(){b.textContent="Press and hold to copy"}
+var p=navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(t):null;if(p&&p.then)p.then(ok,no);else no()}
+function rows(el,arr){el.innerHTML="";arr.forEach(function(s){var d=document.createElement("div");d.className="res";var a=document.createElement("span");a.textContent=s;var b=document.createElement("button");b.className="sm";b.textContent="Copy";b.onclick=function(){cp(s,b)};d.appendChild(a);d.appendChild(b);el.appendChild(d)})}
+function plan(){var g=cur(),h="",n=0;
+g.p.forEach(function(p,i){var on=S[S.game+"d"+i];if(on)n++;
+h+='<div class="day'+(on?' done':'')+'"><input type="checkbox" data-k="'+S.game+'d'+i+'"'+(on?' checked':'')+'><details><summary><span class="d">M'+('0'+(i+1)).slice(-2)+'</span>'+p[0]+'</summary><div class="more"><b>Hook:</b> '+p[1]+'<br><b>Thumbnail:</b> '+g.thumb+'<br><b>Flow:</b> Hook (0–15s) → Main content → Ask for a comment → Subscribe CTA</div></details></div>'});
+$("days").innerHTML=h;
+$("pt").textContent=g.e+" "+g.n+" · "+n+" / 30 missions cleared";$("pb").style.width=(n/30*100)+"%";
+$("s1").textContent=n;$("s2").textContent=RK[Math.min(Math.floor(n/5),6)];$("s3").textContent=n*10;prof(n);$("s4").textContent=n>=30?"🏆":n>=15?"🥇":n>=7?"🥈":"–"}
+var AC;function tone(f,t,d,v){if(S.snd===false)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();var o=AC.createOscillator(),g=AC.createGain(),n=AC.currentTime+t;o.type="square";o.frequency.value=f;g.gain.setValueAtTime(v||.05,n);g.gain.exponentialRampToValueAtTime(.0001,n+d);o.connect(g);g.connect(AC.destination);o.start(n);o.stop(n+d)}catch(e){}}
+function sfx(k){if(k==="up"){[523,659,784,1047,1319].forEach(function(f,i){tone(f,i*.11,.25)})}else if(k==="ok"){tone(660,0,.1);tone(880,.09,.16)}else{tone(420,0,.07,.03)}}
+var PX='<svg class="px" viewBox="0 0 12 14" xmlns="http://www.w3.org/2000/svg"><rect class="fk" x="3" y="0" width="6" height="1"/><rect class="fc" x="2" y="1" width="8" height="1"/><rect class="fs" x="2" y="2" width="8" height="3"/><rect class="fs" x="3" y="5" width="6" height="1"/><rect class="fa" x="1" y="2" width="1" height="3"/><rect class="fa" x="10" y="2" width="1" height="3"/><rect class="fk" x="2" y="3" width="8" height="1"/><rect class="fc gl" x="3" y="3" width="1" height="1"/><rect class="fc gl" x="7" y="3" width="1" height="1"/><rect x="5" y="4" width="2" height="1" fill="#b4503f"/><rect class="fa" x="3" y="6" width="6" height="4"/><rect class="fa" x="1" y="6" width="2" height="3"/><rect class="fa" x="9" y="6" width="2" height="3"/><rect class="fs" x="1" y="9" width="2" height="1"/><rect class="fs" x="9" y="9" width="2" height="1"/><rect class="fk" x="3" y="8" width="6" height="2"/><rect class="fc" x="4" y="9" width="1" height="1"/><rect class="fb" x="7" y="8" width="1" height="1"/><rect class="fc" x="8" y="9" width="1" height="1"/><rect class="fp l1" x="3" y="10" width="2" height="3"/><rect class="fp l2" x="7" y="10" width="2" height="3"/><rect class="fk l1" x="2" y="13" width="3" height="1"/><rect class="fk l2" x="7" y="13" width="3" height="1"/></svg>';
+var AV={FF:"🥷",MC:"🧙"};
+var RN={FF:["🥷","🏃","🛡️","🚙"],MC:["🐷","🧟","🐔","🐺"]};
+function prof(n){var l=Math.floor(n/5);$("av").innerHTML=PX;$("pn").textContent=(S.name||"PLAYER").toUpperCase();$("pl").textContent="LVL "+(l+1)+" · "+RK[Math.min(l,6)];$("xb").style.width=(n>=30?100:(n%5)*20)+"%";$("xt").textContent=n>=30?"MAX LEVEL REACHED":(5-n%5)+" more missions to level up"}
+function lane(){var L=$("lane");L.innerHTML="";RN[S.game].forEach(function(c,i){var r=document.createElement("span");r.className="rn";r.style.animationDuration=(11+i*4)+"s";r.style.animationDelay="-"+(i*3.7)+"s";var h=document.createElement("span");h.className="hp";h.textContent=c;h.style.animationDelay="-"+(i*.13)+"s";r.appendChild(h);L.appendChild(r)});var x=document.createElement("span");x.className="rn";x.style.animationDuration="9s";x.style.animationDelay="-2s";x.innerHTML='<span class="hp pxh">'+PX+'</span>';L.appendChild(x)}
+function ds(d){return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()}
+function yd(){var y=new Date();y.setDate(y.getDate()-1);return ds(y)}
+function streak(){return(S.last===ds(new Date())||S.last===yd())?(S.st||0):0}
+function bump(){var t=ds(new Date());if(S.last===t)return;S.st=(S.last===yd()?(S.st||0):0)+1;S.last=t;S.best=Math.max(S.best||0,S.st);save()}
+function showSt(){$("s5").textContent=streak()}
+function level(n){var r=RK[Math.min(Math.floor(n/5),6)];var o=document.createElement("div");o.className="lvl";o.innerHTML='<div>🏆<b>LEVEL UP!</b><span>You are now '+r+'</span></div>';o.onclick=function(){o.remove()};document.body.appendChild(o);setTimeout(function(){o.remove()},2800)}
+function boom(){var a=$("av");a.classList.remove("cheer");void a.offsetWidth;a.classList.add("cheer");var em=S.game==="MC"?["⛏️","💎","🟩","✨"]:["🔥","💥","🎯","✨"];for(var i=0;i<20;i++){var s=document.createElement("span");s.className="cf";s.textContent=em[i%4];s.style.left=(Math.random()*94)+"vw";s.style.animationDelay=(Math.random()*.4)+"s";s.style.fontSize=(16+Math.random()*16)+"px";document.body.appendChild(s);setTimeout(function(x){x.remove()},2200,s)}}
+function lists(){["c1","c2","c3"].forEach(function(id){$(id).innerHTML=CH[id].map(function(t,i){var k=id+i;return '<label class="ck"><input type="checkbox" data-k="'+k+'"'+(S[k]?' checked':'')+'>'+t+'</label>'}).join("")})}
+function greet(){var n=S.name;$("hi").textContent=(n?"PLAYER "+n.toUpperCase()+" · ":"")+"MODE: "+cur().n.toUpperCase()+" · pick your game below"}
+function setGame(k){S.game=k;save();var g=cur();document.documentElement.setAttribute("data-game",k);
+document.querySelectorAll(".gb").forEach(function(b){b.classList.toggle("on",b.dataset.g===k)});
+$("tc").innerHTML=g.topics.map(function(t){return '<button class="sm" data-tp="'+t+'">'+t+'</button>'}).join("");
+$("thtip").textContent=g.thumb;$("thout").innerHTML="";$("out").innerHTML='<span class="l">Your titles will appear here.</span>';
+$("dout").innerHTML="";$("sh").textContent="Tap the button";$("tp").value="";
+$("lt").textContent=g.e+" "+g.n+" live stream ideas";rows($("li"),g.lv);
+plan();greet();lane();["plan","titles","tools","live"].forEach(function(s){var el=$(s);el.classList.remove("swap");void el.offsetWidth;el.classList.add("swap")})}
+document.addEventListener("change",function(e){var k=e.target.getAttribute&&e.target.getAttribute("data-k");if(!k)return;S[k]=e.target.checked;save();if(k[0]!=="c"){plan();if(e.target.checked){boom();bump();showSt();var n=+$("s1").textContent;if(n%5===0){sfx("up");level(n)}else sfx("ok")}}else if(e.target.checked)sfx("tick")});
+document.addEventListener("click",function(e){var t=e.target.getAttribute&&e.target.getAttribute("data-tp");if(t)$("tp").value=t});
+document.querySelectorAll(".gb").forEach(function(b){b.onclick=function(){sfx("tick");setGame(b.dataset.g)}});
+document.querySelectorAll(".tab").forEach(function(b){b.onclick=function(){document.querySelectorAll(".tab").forEach(function(x){x.classList.remove("on")});b.classList.add("on");["plan","titles","tools","live"].forEach(function(s){$(s).hidden=(s!==b.dataset.t)})}});
+$("nm").value=S.name||"";$("nm").oninput=function(){S.name=this.value.trim();save();greet();prof(+$("s1").textContent)};
+$("cpp").onclick=function(){cp(cur().n+" 30-day plan\n"+cur().p.map(function(p,i){return "Day "+(i+1)+": "+p[0]}).join("\n"),this)};
+$("gen").onclick=function(){var t=$("tp").value.trim()||cur().topics[0];
+rows($("out"),sh(TT[$("sty").value]).map(function(s){return s.replace(/\{t\}/g,t).replace(/\{g\}/g,cur().n)}))};
+$("thb").onclick=function(){rows($("thout"),sh(cur().tx).slice(0,4))};
+$("dgo").onclick=function(){var g=cur(),t=$("dt").value.trim()||"My New Video",c=S.name||"my channel";
+var d=t+"\n\nIn this "+g.n+" video I show you everything step by step. Watch till the end!\n\n⏱ Timestamps\n0:00 Intro\n0:30 Main part\n\n🔔 Subscribe to "+c+" for daily "+g.n+" videos.\n💬 Comment your best "+g.n+" moment below!\n\n"+g.ht;
+var o=$("dout");o.innerHTML="";var p=document.createElement("pre");p.textContent=d;var b=document.createElement("button");b.className="sm";b.textContent="Copy description";b.onclick=function(){cp(d,b)};o.appendChild(p);o.appendChild(b)};
+$("shb").onclick=function(){$("sh").textContent=sh(cur().sh)[0]};
+$("rl").onclick=function(){Object.keys(S).forEach(function(k){if(k[0]==="c")delete S[k]});save();lists()};
+lists();setGame(S.game);showSt();
+var f=$("ps").querySelector(".pm span");f.className="pxh";f.innerHTML=PX;
+$("ps").onclick=function(){var p=this;sfx("up");p.classList.add("out");setTimeout(function(){p.remove()},600)};
+var sb=$("snd");function sbu(){sb.textContent=S.snd===false?"🔇":"🔊"}sbu();sb.onclick=function(){S.snd=S.snd===false;save();sbu();sfx("ok")};
+$("shr").onclick=function(){var g=cur(),n=+$("s1").textContent,b=this,t="🎮 I’m "+n+"/30 days into my "+g.n+" content plan!\nRank: "+$("s2").textContent+" · XP: "+n*10+" · Streak: "+streak()+" 🔥\nBuilt with Gaming Creator Toolkit Pro";if(navigator.share){try{navigator.share({text:t}).catch(function(er){if(!er||er.name!=="AbortError")cp(t,b)})}catch(x){cp(t,b)}}else cp(t,b)};
+</script>
+</body>
+</html>
